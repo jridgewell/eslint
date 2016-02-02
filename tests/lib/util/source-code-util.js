@@ -93,11 +93,11 @@ describe("SourceCodeUtil", function() {
         });
 
         it("should accept a glob argument", function() {
-            var glob = getFixturePath("**/*.js");
-            var nestedFilename = getFixturePath("nested", "foo.js");
+            var glob = getFixturePath("*.js");
+            var filename = getFixturePath("foo.js");
             var sourceCode = getSourceCodeOfFiles(glob, {cwd: fixtureDir});
             assert.isObject(sourceCode);
-            assert.property(sourceCode, nestedFilename);
+            assert.property(sourceCode, filename);
         });
 
         it("should create an object with located filenames as keys", function() {
@@ -114,12 +114,12 @@ describe("SourceCodeUtil", function() {
             assert.notProperty(sourceCode, filename);
         });
 
-        it("should show message for files with parsing errors", function() {
-            var filename = getFixturePath("parse-error.js");
-            var sourceCode = getSourceCodeOfFiles(filename, {cwd: fixtureDir});
-            assert.isObject(sourceCode);
-            assert(log.error.called);
-            assert.include(log.error.args[0][0], "Parsing error: Unexpected token ;");
+        it("should throw for files with parsing errors", function() {
+            var filename = getFixturePath("parse-error", "parse-error.js");
+            assert.throw(function() {
+                getSourceCodeOfFiles(filename, {cwd: fixtureDir});
+            }, /Parsing error: Unexpected token ;/);
+
         });
 
         it("should obtain the sourceCode of a file", function() {
