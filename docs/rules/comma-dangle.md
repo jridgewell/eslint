@@ -40,6 +40,14 @@ foo({
   bar: "baz",
   qux: "quux",     /*error Unexpected trailing comma.*/
 });
+
+import {
+    foo,
+    bar,           /*error Unexpected trailing comma.*/
+} from "baz";
+
+import { foo, }    /*error Unexpected trailing comma.*/
+    from "bar"
 ```
 
 The following patterns are not considered problems when configured `"never"`:
@@ -58,6 +66,14 @@ foo({
   bar: "baz",
   qux: "quux"
 });
+
+import {
+    foo,
+    bar
+} from "baz";
+
+import { foo }
+    from "bar"
 ```
 
 The following patterns are considered problems when configured `"always"`:
@@ -76,6 +92,14 @@ foo({
   bar: "baz",
   qux: "quux"     /*error Missing trailing comma.*/
 });
+
+import {
+    foo,
+    bar           /*error Missing trailing comma.*/
+} from "baz";
+
+import { foo }    /*error Missing trailing comma.*/
+    from "bar"
 ```
 
 The following patterns are not considered problems when configured `"always"`:
@@ -94,6 +118,14 @@ foo({
   bar: "baz",
   qux: "quux",
 });
+
+import {
+    foo,
+    bar,
+} from "baz";
+
+import { foo, }
+    from "bar"
 ```
 
 The following patterns are considered problems when configured `"always-multiline"`:
@@ -122,6 +154,14 @@ foo({
   bar: "baz",
   qux: "quux"                           /*error Missing trailing comma.*/
 });
+
+import {
+    foo,
+    bar                                 /*error Missing trailing comma.*/
+} from "baz";
+
+import { foo, }                         /*error Unexpected trailing comma.*/
+    from "bar"
 ```
 
 The following patterns are not considered problems when configured `"always-multiline"`:
@@ -149,6 +189,14 @@ foo({
   bar: "baz",
   qux: "quux",
 });
+
+import {
+    foo,
+    bar,
+} from "baz";
+
+import { foo }
+    from "bar"
 ```
 
 The following patterns are considered problems when configured `"only-multiline"`:
@@ -163,6 +211,8 @@ var arr = [1,2,];                       /*error Unexpected trailing comma.*/
 var arr = [1,
     2,];                                /*error Unexpected trailing comma.*/
 
+import { foo, }                         /*error Unexpected trailing comma.*/
+    from "bar"
 ```
 
 The following patterns are not considered problems when configured `"only-multiline"`:
@@ -205,6 +255,19 @@ foo({
   bar: "baz",
   qux: "quux"
 });
+
+import {
+    foo,
+    bar
+} from "baz";
+
+import {
+    foo,
+    bar,
+} from "baz";
+
+import { foo }
+    from "bar"
 ```
 
 ## When Not To Use It

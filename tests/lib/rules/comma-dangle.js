@@ -218,6 +218,28 @@ ruleTester.run("comma-dangle", rule, {
             code: "import {foo} from \n'foo';",
             parserOptions: { sourceType: "module" },
             options: ["only-multiline"]
+        },
+
+        // https://github.com/eslint/eslint/pull/...
+        {
+            code: "import {foo}\n from 'foo';",
+            parserOptions: { sourceType: "module" },
+            options: ["always-multiline"]
+        },
+        {
+            code: "import {foo}\n from 'foo';",
+            parserOptions: { sourceType: "module" },
+            options: ["only-multiline"]
+        },
+        {
+            code: "export {foo}\n from 'foo';",
+            parserOptions: { sourceType: "module" },
+            options: ["always-multiline"]
+        },
+        {
+            code: "export {foo}\n from 'foo';",
+            parserOptions: { sourceType: "module" },
+            options: ["only-multiline"]
         }
     ],
     invalid: [
@@ -793,6 +815,32 @@ ruleTester.run("comma-dangle", rule, {
             parserOptions: { sourceType: "module" },
             options: ["always-multiline"],
             errors: [{message: "Missing trailing comma.", type: "ExportSpecifier"}]
+        },
+
+        // https://github.com/eslint/eslint/pull/...
+        {
+            code: "import {foo,}\n from 'foo';",
+            parserOptions: { sourceType: "module" },
+            options: ["only-multiline"],
+            errors: [{message: "Unexpected trailing comma.", type: "ImportSpecifier"}]
+        },
+        {
+            code: "import {foo,}\n from 'foo';",
+            parserOptions: { sourceType: "module" },
+            options: ["always-multiline"],
+            errors: [{message: "Unexpected trailing comma.", type: "ImportSpecifier"}]
+        },
+        {
+            code: "export {foo,}\n from 'foo';",
+            parserOptions: { sourceType: "module" },
+            options: ["only-multiline"],
+            errors: [{message: "Unexpected trailing comma.", type: "ExportSpecifier"}]
+        },
+        {
+            code: "export {foo,}\n from 'foo';",
+            parserOptions: { sourceType: "module" },
+            options: ["always-multiline"],
+            errors: [{message: "Unexpected trailing comma.", type: "ExportSpecifier"}]
         }
     ]
 });
